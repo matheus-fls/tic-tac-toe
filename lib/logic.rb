@@ -1,5 +1,9 @@
 # frozen_string_literal: false
 
+def bin_converter(state)
+  state.reduce(0) { |acc, value| acc * 2 + value }
+end
+
 WINNER_STATES = [
 
   [1, 0, 0,
@@ -34,7 +38,7 @@ WINNER_STATES = [
    0, 1, 0,
    1, 0, 0]
 
-]
+].map { |state| bin_converter(state) }
 
 class GameState
   def initialize
@@ -44,16 +48,11 @@ class GameState
   end
 
   # Will determine if it's a winning state
+
   def winner?
-    WINNER_STATES.any? do |state|
-      flag = true
-      for i in 0...9
-        if state[i] == 1 && @board[i].zero?
-          flag = false
-          break
-        end
-      end
-      flag
+    b = bin_converter(@board)
+    WINNER_STATES.any? do |a|
+      a & b == a
     end
   end
 
@@ -72,7 +71,8 @@ class GameState
 end
 
 class Player
-  def initialize(token) # Either O or X
+  # Either O or X
+  def initialize(token)
     @token = token
     @state = GameState.new
   end
@@ -96,7 +96,6 @@ class Player
   def to_s
     "Player '#{@token}'"
   end
-
 end
 
 class Game
@@ -128,18 +127,14 @@ class Game
     @players.find(&:winner?)
   end
 
+  def tie?
+    state !~ /[0-9]/
+  end
+
   def to_s
     s = state
-    " #{s[0]} | #{s[1]} | #{s[2]}\n---+---+---\n #{s[3]} | #{s[4]} | #{s[5]}\n---+---+---\n #{s[6]} | #{s[7]} | #{s[8]}\n"
+    " #{s[0]} | #{s[1]} | #{s[2]}\n---+---+---\n" \
+    " #{s[3]} | #{s[4]} | #{s[5]}\n---+---+---\n" \
+    " #{s[6]} | #{s[7]} | #{s[8]}\n"
   end
 end
-
-=begin
-
-  X |   |        1 0 0    0 0 0
- ---+---+---
-    | O |        0 0 0    0 1 0
- ---+---+---
-  O |   | X      0 0 1    1 0 0
-
-=end
