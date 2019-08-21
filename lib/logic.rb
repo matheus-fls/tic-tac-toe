@@ -1,4 +1,4 @@
-# frozen_string_literal: true
+# frozen_string_literal: false
 
 class GameState
   def initialize
@@ -19,6 +19,11 @@ class GameState
   def valid_move?(cell)
     @board[cell].zero?
   end
+
+  def reflect_state(str, token)
+    @board.each_with_index { |state, index| str[index] = token if state == 1 }
+    str
+  end
 end
 
 class Player
@@ -38,6 +43,10 @@ class Player
   def play(cell)
     @state.play(cell)
   end
+
+  def reflect_state(str)
+    @state.reflect_state(str, @token)
+  end
 end
 
 class Game
@@ -55,12 +64,19 @@ class Game
   end
 
   def play(cell)
+    return false unless valid_move?(cell)
+
     @players[@player_turn].play(cell)
     @player_turn = 1 - @player_turn
   end
 
+  def state
+    @players.inject('.........') { |state, player| player.reflect_state(state) }
+  end
+
   def to_s
-    "Game"
+    s = state
+    " #{s[0]} | #{s[1]} | #{s[2]}\n---+---+---\n #{s[3]} | #{s[4]} | #{s[5]}\n---+---+---\n #{s[6]} | #{s[7]} | #{s[8]}\n"
   end
 end
 
