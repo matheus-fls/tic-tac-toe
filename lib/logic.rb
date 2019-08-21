@@ -1,5 +1,41 @@
 # frozen_string_literal: false
 
+WINNER_STATES = [
+
+  [1, 0, 0,
+   1, 0, 0,
+   1, 0, 0],
+
+  [0, 1, 0,
+   0, 1, 0,
+   0, 1, 0],
+
+  [0, 0, 1,
+   0, 0, 1,
+   0, 0, 1],
+
+  [1, 1, 1,
+   0, 0, 0,
+   0, 0, 0],
+
+  [0, 0, 0,
+   1, 1, 1,
+   0, 0, 0],
+
+  [0, 0, 0,
+   0, 0, 0,
+   1, 1, 1],
+
+  [1, 0, 0,
+   0, 1, 0,
+   0, 0, 1],
+
+  [0, 0, 1,
+   0, 1, 0,
+   1, 0, 0]
+
+]
+
 class GameState
   def initialize
     @board = [0, 0, 0,
@@ -9,7 +45,16 @@ class GameState
 
   # Will determine if it's a winning state
   def winner?
-    false
+    WINNER_STATES.any? do |state|
+      flag = true
+      for i in 0...9
+        if state[i] == 1 && @board[i].zero?
+          flag = false
+          break
+        end
+      end
+      flag
+    end
   end
 
   def play(cell)
@@ -33,7 +78,7 @@ class Player
   end
 
   def winner?
-    false
+    @state.winner?
   end
 
   def valid_move?(cell)
@@ -47,6 +92,11 @@ class Player
   def reflect_state(str)
     @state.reflect_state(str, @token)
   end
+
+  def to_s
+    "Player '#{@token}'"
+  end
+
 end
 
 class Game
@@ -71,7 +121,11 @@ class Game
   end
 
   def state
-    @players.inject('.........') { |state, player| player.reflect_state(state) }
+    @players.inject('123456789') { |state, player| player.reflect_state(state) }
+  end
+
+  def winner
+    @players.find(&:winner?)
   end
 
   def to_s
