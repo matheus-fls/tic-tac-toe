@@ -1,4 +1,4 @@
-require './lib/logic.rb'
+require_relative '../lib/game.rb'
 
 puts "START..."
 
