@@ -4,7 +4,6 @@ require_relative '../lib/banner.rb'
 puts "START..."
 
 alphabet = Alphabet.new
-alphabet.read
 
 puts alphabet.to_banner "O|X|3"
 puts "###################################"
@@ -12,7 +11,7 @@ puts alphabet.to_banner "4|5|9"
 puts "###################################"
 puts alphabet.to_banner "7|8|3"
 
-=begin
+
 game = Game.new(0)
 
 puts game
@@ -31,4 +30,3 @@ if game.winner
 else
   puts "It's a tie!"
 end
-=end
