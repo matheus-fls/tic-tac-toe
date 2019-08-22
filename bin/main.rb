@@ -15,22 +15,14 @@ class Match
     puts @alphabet.to_banner "#{s[3]}|#{s[4]}|#{s[5]}"
     puts "###################################"
     puts @alphabet.to_banner "#{s[6]}|#{s[7]}|#{s[8]}"
-    #puts "#{@game}\n"
-    # puts alphabet.to_banner "O|X|3"
-    # puts "###################################"
-    # puts alphabet.to_banner "4|5|9"
-    # puts "###################################"
-    # puts alphabet.to_banner "7|8|3"
-
   end
 
   def play_match
     display_board
     until @game.winner || @game.tie? do
-      print "\nMove: "
-      move = gets.chomp.to_i
+      move = @game.fetch_current_player_move
       unless @game.play(move - 1)
-        puts "Invalid move! Try again"
+        puts "Invalid move! (#{move}) Try again"
       end
       display_board
     end
@@ -57,8 +49,15 @@ class Match
   end
 end
 
-puts "START...\n "
-
 match = Match.new
-
 match.run
+
+=begin 
+game = Game.new
+game.play(4)
+game.fetch_current_player_move
+
+puts game
+puts "\n "
+
+=end

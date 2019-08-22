@@ -26,6 +26,19 @@ class Player
     @state.reflect_state(str, @token)
   end
 
+  def fetch_play(_)
+    print "\nPlayer #{@token}, your move: "
+    gets.chomp.to_i
+  end
+
+  def store_state
+    @state.store_state
+  end
+
+  def restore_state
+    @state.restore_state
+  end
+
   def to_s
     "Player '#{@token}'"
   end

@@ -1,11 +1,14 @@
 # frozen_string_literal: false
 
 require_relative './player.rb'
+require_relative './ai.rb'
 
 class Game
   def initialize(turn = 0, use_ai = false)
     @player_turn = turn
-    @players = [Player.new('X'), Player.new('O')]
+    # @players = [Player.new('X'), Player.new('O')]
+    @players = [Player.new('X'), AI.new('O')]
+    @turn_save = nil
   end
 
   def valid_move?(cell)
@@ -15,7 +18,7 @@ class Game
   @@positions = [1, 2, 3, 4, 5, 6, 7, 8, 9] # rubocop:disable Style/ClassVars
 
   def valid_moves
-    @@positions.select { |cell| valid_move?(cell) }
+    @@positions.select { |cell| valid_move?(cell - 1) }
   end
 
   def play(cell)
@@ -35,6 +38,20 @@ class Game
 
   def tie?
     state !~ /[0-9]/
+  end
+
+  def fetch_current_player_move
+    @players[@player_turn].fetch_play(self)
+  end
+
+  def store_state
+    @turn_save = @player_turn
+    @players.each(&:store_state)
+  end
+
+  def restore_state
+    @player_turn = @turn_save
+    @players.each(&:restore_state)
   end
 
   def to_s
