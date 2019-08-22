@@ -4,6 +4,7 @@ require_relative './game_state.rb'
 
 class Player
   # Either O or X
+  attr_reader :token
   def initialize(token)
     @token = token
     @state = GameState.new
