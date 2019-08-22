@@ -15,8 +15,8 @@ until game.winner || game.tie? do
     puts "#{game}\n"
 end
 
-if game.tie?
-  puts "It's a tie!" 
-else
+if game.winner
   puts "#{game.winner} wins!"
+else
+  puts "It's a tie!" 
 end
