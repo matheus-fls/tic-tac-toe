@@ -6,10 +6,10 @@ class AIPlayer < Player
   def fetch_play(current_game)
     current_game.store_state
     move = if current_game.valid_moves.length == 1
-      current_game.valid_moves.first
-    else
-      calc_montecarlo(current_game) + 1
-    end
+             current_game.valid_moves.first
+           else
+             calc_montecarlo(current_game) + 1
+           end
     current_game.restore_state
     move
   end
@@ -30,8 +30,7 @@ class AIPlayer < Player
                    0
                  else
                    -2
-                 end
-    ]
+                 end]
   end
 
   def calc_montecarlo(game)
@@ -50,9 +49,9 @@ class AIPlayer < Player
     end
 
     best = [0, -9e9]
-    values.each_with_index do |value, move|
-      score = value.to_f / counts[move]
-      best = [move, score] if score > best.last
+    values.each_with_index do |val, mov|
+      score = val.to_f / counts[mov]
+      best = [mov, score] if score > best.last
     end
 
     best.first
