@@ -15,16 +15,21 @@ class Match
 
   def display_board
     cls
+    puts '*************************************************'
+    puts '*                  TIC-TAC-TOE                  *'
+    puts '*************************************************'
+    puts "      by the Fantastic Duo: Math & Monstruo\n\n"
     s = @game.state
-    puts @alphabet.to_banner "#{s[0]}|#{s[1]}|#{s[2]}"
-    puts "###################################"
-    puts @alphabet.to_banner "#{s[3]}|#{s[4]}|#{s[5]}"
-    puts "###################################"
-    puts @alphabet.to_banner "#{s[6]}|#{s[7]}|#{s[8]}"
+    puts @alphabet.to_banner " #{s[0]}|#{s[1]}|#{s[2]}"
+    puts "       ###################################"
+    puts @alphabet.to_banner " #{s[3]}|#{s[4]}|#{s[5]}"
+    puts "       ###################################"
+    puts @alphabet.to_banner " #{s[6]}|#{s[7]}|#{s[8]}"
   end
 
   def play_match
     until @game.winner || @game.tie? do
+      puts "\nValid moves: #{@game.valid_moves}"
       move = @game.fetch_current_player_move
       unless @game.play(move - 1)
         puts "Invalid move! (#{move}) Try again"
@@ -42,10 +47,10 @@ class Match
 
   def run
     cls
-    puts '*******************************************************'
-    puts '*                  TIC-TAC-TOE                        *'
-    puts '*******************************************************'
-    puts "        by the Fantastic Duo: Math & Monstruo\n\n"
+    puts '*************************************************'
+    puts '*                  TIC-TAC-TOE                  *'
+    puts '*************************************************'
+    puts "      by the Fantastic Duo: Math & Monstruo\n\n"
 
     oponent = ''
     until oponent == 'H' || oponent == 'C'

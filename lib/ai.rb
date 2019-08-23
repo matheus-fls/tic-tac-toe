@@ -2,7 +2,7 @@
 
 require_relative './player.rb'
 
-class AI < Player
+class AIPlayer < Player
   def fetch_play(current_game)
     current_game.store_state
     move = if current_game.valid_moves.length == 1

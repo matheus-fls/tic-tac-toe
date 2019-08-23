@@ -6,7 +6,7 @@ require_relative './ai.rb'
 class Game
   def initialize(turn = 0, use_ai = false)
     @player_turn = turn
-    @players = [Player.new('X'), use_ai ? AI.new('O') : Player.new('O')]
+    @players = [Player.new('X'), use_ai ? AIPlayer.new('O') : Player.new('O')]
     @turn_save = nil
   end
 
