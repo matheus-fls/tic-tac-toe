@@ -5,16 +5,13 @@ require_relative './player.rb'
 class AI < Player
   def fetch_play(current_game)
     current_game.store_state
-    move = current_game.valid_moves.sample
-    # puts "Valid moves: #{current_game.valid_moves}, chose: #{move}"
-
-    # puts "Random game: #{play_random_game(current_game)}"
-    # puts current_game
-
-    move = calc_montecarlo(current_game)
-
+    move = if current_game.valid_moves.length == 1
+      current_game.valid_moves.first
+    else
+      calc_montecarlo(current_game) + 1
+    end
     current_game.restore_state
-    move + 1
+    move
   end
 
   def play_random_game(game)
@@ -25,48 +22,39 @@ class AI < Player
       move = game.valid_moves.sample
       game.play(move - 1)
     end
-    value = case game.winner
-            when self
-              10
-            when nil
-               0
-            else
-             -15
-            end
-    [first_move, value]
+
+    [first_move, case game.winner
+                 when self
+                   1
+                 when nil
+                   0
+                 else
+                   -2
+                 end
+    ]
   end
 
   def calc_montecarlo(game)
+    print "\nThinking..."
     values = [0, 0, 0, 0, 0, 0, 0, 0, 0]
     counts = [0, 0, 0, 0, 0, 0, 0, 0, 0]
 
+    count = 0
     eta = Time.now + 1.5
     while Time.now < eta
-
       random = play_random_game(game)
       move, value = random
-
-      # puts "random: #{random} => move: #{move}, value: #{value}"
-
       values[move - 1] += value
       counts[move - 1] += 1
-
+      print '.' if ((count += 1) % 500).zero?
     end
 
-    bestMove  = 0
-    bestScore = -1000000000.0
-
-    for i in 0..8
-      score = 1.0 * values[i] / counts[i]
-      puts "Score for #{i} is #{score}"
-      if score > bestScore
-        bestScore = score
-        bestMove = i
-      end
+    best = [0, -9e9]
+    values.each_with_index do |value, move|
+      score = value.to_f / counts[move]
+      best = [move, score] if score > best.last
     end
 
-    puts "Best move is: #{bestMove}"
-    bestMove
-
+    best.first
   end
 end

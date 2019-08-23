@@ -6,8 +6,7 @@ require_relative './ai.rb'
 class Game
   def initialize(turn = 0, use_ai = false)
     @player_turn = turn
-    # @players = [Player.new('X'), Player.new('O')]
-    @players = [Player.new('X'), AI.new('O')]
+    @players = [Player.new('X'), use_ai ? AI.new('O') : Player.new('O')]
     @turn_save = nil
   end
 
@@ -37,7 +36,7 @@ class Game
   end
 
   def tie?
-    state !~ /[0-9]/
+    state !~ /[0-9]/ && !winner
   end
 
   def fetch_current_player_move
