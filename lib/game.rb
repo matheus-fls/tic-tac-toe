@@ -3,7 +3,7 @@
 require_relative './player.rb'
 
 class Game
-  def initialize(turn = 0)
+  def initialize(turn = 0, _use_ai = false)
     @player_turn = turn
     @players = [Player.new('X'), Player.new('O')]
   end
