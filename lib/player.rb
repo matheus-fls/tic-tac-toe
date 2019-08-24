@@ -26,9 +26,8 @@ class Player
     @state.reflect_state(str, @token)
   end
 
-  def fetch_play(_)
-    print "\nPlayer #{@token}, your move: "
-    gets.chomp.to_i
+  def fetch_play(_, &block)
+    block.call(self)
   end
 
   def store_state

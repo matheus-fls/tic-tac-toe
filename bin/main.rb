@@ -30,10 +30,16 @@ class Match
   def play_match
     until @game.winner || @game.tie? do
       puts "\nValid moves: #{@game.valid_moves}"
-      move = @game.fetch_current_player_move
-      unless @game.play(move - 1)
+      move = 0
+      loop do
+        move = @game.fetch_current_player_move do |player|
+          print "\nPlayer #{player.token}, your move: "
+          gets.chomp.to_i
+        end
+        break if @game.valid_moves.any?(move)
         puts "Invalid move! (#{move}) Try again"
       end
+      @game.play(move - 1)
       display_board
     end
 

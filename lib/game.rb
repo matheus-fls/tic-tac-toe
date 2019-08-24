@@ -41,8 +41,8 @@ class Game
     state !~ /[0-9]/ && !winner
   end
 
-  def fetch_current_player_move
-    @players[@player_turn].fetch_play(self)
+  def fetch_current_player_move(&block)
+    @players[@player_turn].fetch_play(self, &block)
   end
 
   def store_state
