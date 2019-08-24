@@ -8,6 +8,7 @@ class Game
     @player_turn = turn
     @players = [Player.new('X'), use_ai ? AIPlayer.new('O') : Player.new('O')]
     @turn_save = nil
+    @valid_moves = nil
   end
 
   def valid_move?(cell)
@@ -17,7 +18,7 @@ class Game
   @@positions = [1, 2, 3, 4, 5, 6, 7, 8, 9] # rubocop:disable Style/ClassVars
 
   def valid_moves
-    @@positions.select { |cell| valid_move?(cell - 1) }
+    @valid_moves ||= @@positions.select { |pos| valid_move?(pos - 1) }
   end
 
   def play(cell)
@@ -25,6 +26,7 @@ class Game
 
     @players[@player_turn].play(cell)
     @player_turn = 1 - @player_turn
+    @valid_moves = nil
   end
 
   def state
@@ -51,6 +53,7 @@ class Game
   def restore_state
     @player_turn = @turn_save
     @players.each(&:restore_state)
+    @valid_moves = nil
   end
 
   def to_s
