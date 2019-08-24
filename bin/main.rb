@@ -72,7 +72,7 @@ class Match
       puts "Player1 Score: #{@score['X']} | Player2 Score: #{@score['O']}\n "
       print "Play again? Y/N  "
       foo = gets.chomp
-      if foo.upcase != "Y"
+      if foo.upcase != "Y" && foo != ""
         break
       end
     end
