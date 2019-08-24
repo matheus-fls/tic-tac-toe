@@ -12,27 +12,30 @@ class AIPlayer < Player
 
   def play_random_game(game, first_move)
     game.play(first_move - 1)
-    game.play(game.valid_moves.sample - 1) until game.winner || game.tie?
+    weight = 9
+    until game.winner || game.tie?
+      game.play(game.valid_moves.sample - 1)
+      weight -= 1
+    end
 
     # This is the heart of the AI: The heuristic
     case game.winner
     when self
-      1
+      weight
     when nil
       0
     else
-      -2
+      -2 * weight
     end
   end
 
   def calc_montecarlo(game)
-    # @valid_moves = game.valid_moves
     print "\nThinking..."
     values = Array.new(10, 0)
     counts = Array.new(10, 0)
 
     total = 0
-    eta = Time.now + 0.5
+    eta = Time.now + 0.1
     while Time.now < eta
 
       game.restore_state
@@ -58,9 +61,8 @@ class AIPlayer < Player
 
     game.restore_state
     game.valid_moves.max_by do |mov|
-      values[mov].to_f / counts[mov]
       # puts "Heuristic for #{mov}: #{values[mov]}/#{counts[mov]} = #{score}"
+      values[mov].to_f / counts[mov]
     end
-
   end
 end
