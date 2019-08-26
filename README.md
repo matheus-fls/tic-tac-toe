@@ -7,7 +7,7 @@ Made by the Fantastic Duo [Oscar Nava](https://github.com/oscarnava) and [Matheu
 
 To start the game, in a terminal navigate to the root directory and type:
 
-`ruby main.rb`
+`ruby bin/main.rb`
 
 <img  align="right" width="400" src="img/screen_capture_1.jpg">
 
