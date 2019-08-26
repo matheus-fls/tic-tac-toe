@@ -35,7 +35,7 @@ RSpec.describe GameState do
       expect(game_state.valid_move?(3)).to eql(true)
     end
 
-    it 'Identifies a valid move' do
+    it 'Returns the current state' do
       [0, 2, 4, 6, 8].each { |pos| game_state.play(pos) }
       expect(game_state.reflect_state('_________', 'X')).to eql('X_X_X_X_X')
     end

@@ -39,6 +39,6 @@ class Player
   end
 
   def to_s
-    "Player '#{@token}'"
+    "Player '#{@token}' (#{@state.to_i})"
   end
 end
