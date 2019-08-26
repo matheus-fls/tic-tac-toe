@@ -5,6 +5,10 @@ Made by the Fantastic Duo [Oscar Nava](https://github.com/oscarnava) and [Matheu
 
 ## INSTRUCTIONS
 
+To start the game, in a terminal navigate to the root directory and type:
+
+`ruby main.rb`
+
 <img  align="right" width="400" src="img/screen_capture_1.jpg">
 
 This is the starting screen of the game, here we have the header and two options, play vs human, which can be done by pressing "h" (not case sensitive) and pressing enter, or play vs computer, in a similar fashion typing "c" (not case sensitive) and pressing enter. This will lead to the main game.
