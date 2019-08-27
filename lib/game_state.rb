@@ -5,6 +5,7 @@ class GameState
     @board = [0, 0, 0,
               0, 0, 0,
               0, 0, 0]
+    @save = nil
   end
 
   # Will determine if it's a winning state
@@ -27,6 +28,14 @@ class GameState
   def reflect_state(str, token)
     @board.each_with_index { |state, index| str[index] = token if state == 1 }
     str
+  end
+
+  def store_state
+    @save = @board.clone
+  end
+
+  def restore_state
+    @board = @save.clone
   end
 
   def self.bin_converter(state)
