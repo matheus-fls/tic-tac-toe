@@ -55,6 +55,7 @@ class AIPlayer < Player
       print '.' if (total % 500).zero?
     end
 
+    print ". Total sims: #{total}"
     game.restore_state
     mul = 2.0 * Math.log(total)
     game.valid_moves.max_by { |mov| values[mov].to_f / counts[mov] - Math.sqrt(mul / counts[mov]) }

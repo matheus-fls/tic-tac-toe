@@ -4,11 +4,17 @@ require_relative './player.rb'
 require_relative './ai.rb'
 
 class Game
-  def initialize(turn = 0, _use_ai = false)
+  attr_reader :player_turn
+  def initialize(turn = 0, use_ai = false)
     @player_turn = turn
     @players = [Player.new('X'), use_ai ? AIPlayer.new('O') : Player.new('O')]
     @turn_save = nil
     @valid_moves = nil
+  end
+
+  def with_auto_play
+    @players = [AIPlayer.new('X'), AIPlayer.new('O')]
+    self
   end
 
   def valid_move?(cell)
